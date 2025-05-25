@@ -16,7 +16,7 @@ public class HomeController : Controller
             hotelTypesCards.Add(new Card
             {
                 Name = "Готель",
-                Image = "hotel_exaple.jpeg"
+                Image = "/hotel_exaple.jpeg"
             });
         }
 

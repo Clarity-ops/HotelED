@@ -1,0 +1,109 @@
+﻿<main class="flex-grow">
+    <div class="bg-gray-50 flex items-center justify-center" style="min-height:65vh">
+
+        <div class="bg-white shadow-lg rounded-lg w-full max-w-md">
+            <!-- Tabs -->
+            <div class="flex">
+                <button id="loginTab"
+                        class="flex-1 py-3 text-center font-semibold border-b-2 border-blue-600">
+                    Вхід
+                </button>
+                <button id="registerTab"
+                        class="flex-1 py-3 text-center font-semibold text-gray-600 hover:text-gray-800 border-b-2 border-transparent">
+                    Реєстрація
+                </button>
+            </div>
+
+            <!-- Forms Container -->
+            <div class="p-6">
+                <!-- Login Form -->
+                <form id="loginForm" class="space-y-4">
+                    <div>
+                        <label for="loginEmail" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input id="loginEmail" type="email" required
+                               class="mt-1 w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                    </div>
+                    <div>
+                        <label for="loginPassword" class="block text-sm font-medium text-gray-700">Пароль</label>
+                        <input id="loginPassword" type="password" required
+                               class="mt-1 w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                    </div>
+                    <button type="submit"
+                            class="w-full py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700">
+                        Увійти
+                    </button>
+                    <p class="text-sm text-right">
+                        Ще немає акаунту?
+                        <button type="button" id="toRegister" class="text-blue-600 hover:underline">
+                            Зареєструватися
+                        </button>
+                    </p>
+                </form>
+
+                <!-- Register Form -->
+                <form id="registerForm" class="space-y-4 hidden">
+                    <div>
+                        <label for="regName" class="block text-sm font-medium text-gray-700">Ім’я</label>
+                        <input id="regName" type="text" required
+                               class="mt-1 w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                    </div>
+                    <div>
+                        <label for="regEmail" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input id="regEmail" type="email" required
+                               class="mt-1 w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                    </div>
+                    <div>
+                        <label for="regPassword" class="block text-sm font-medium text-gray-700">Пароль</label>
+                        <input id="regPassword" type="password" required
+                               class="mt-1 w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                    </div>
+                    <div>
+                        <label for="regPassword2" class="block text-sm font-medium text-gray-700">Підтвердіть пароль</label>
+                        <input id="regPassword2" type="password" required
+                               class="mt-1 w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                    </div>
+                    <button type="submit"
+                            class="w-full py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700">
+                        Зареєструватися
+                    </button>
+                    <p class="text-sm text-right">
+                        Вже є акаунт?
+                        <button type="button" id="toLogin" class="text-blue-600 hover:underline">
+                            Увійти
+                        </button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    <script>
+        const loginTab    = document.getElementById('loginTab');
+        const registerTab = document.getElementById('registerTab');
+        const loginForm   = document.getElementById('loginForm');
+        const registerForm= document.getElementById('registerForm');
+        const toRegister  = document.getElementById('toRegister');
+        const toLogin     = document.getElementById('toLogin');
+
+        function showLogin() {
+          loginTab.classList.add('border-blue-600', 'text-gray-800');
+          registerTab.classList.remove('border-blue-600', 'text-gray-800');
+          loginForm.classList.remove('hidden');
+          registerForm.classList.add('hidden');
+        }
+        function showRegister() {
+          registerTab.classList.add('border-blue-600', 'text-gray-800');
+          loginTab.classList.remove('border-blue-600', 'text-gray-800');
+          registerForm.classList.remove('hidden');
+          loginForm.classList.add('hidden');
+        }
+
+        loginTab.addEventListener('click', showLogin);
+        registerTab.addEventListener('click', showRegister);
+        toRegister.addEventListener('click', showRegister);
+        toLogin.addEventListener('click', showLogin);
+    </script>
+}
+
