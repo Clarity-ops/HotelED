@@ -1,0 +1,25 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "HotelED";
+    List<Card> cards = ViewBag.HotelTypesCards;
+    List<Card> cities = ViewBag.Cities;
+    var dataDict = new ViewDataDictionary(ViewData);
+}
+
+<!-- Search by Type Carousel -->
+@{
+    dataDict["Header"] = "Пошук за типом помешкання";
+    dataDict["Id"] = 1;
+    @(await Html.PartialAsync("Carousel", cards, dataDict))
+}
+
+@{
+    dataDict["Header"] = "Сплануйте поїздку швидко та просто";
+    dataDict["Id"] = 2;
+    @(await Html.PartialAsync("Carousel", cities, dataDict));
+}
+
+@section Scripts {
+    <script src="carousel.js"></script>
+}

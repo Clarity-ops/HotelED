@@ -1,0 +1,41 @@
+﻿@model List<Card>
+
+@{
+    var numId = (int)ViewBag.Id;
+    var nextBtnId = "nextBtn" + numId;
+    var prevBtnId = "prevBtn" + numId;
+    var carouselId = "carousel" + numId;
+}
+
+<!-- Search by Type Carousel -->
+<section class="container mx-auto px-6 py-12">
+    <h2 class="text-2xl font-bold mb-6">@ViewBag.Header</h2>
+
+    <div class="relative">
+        <!-- Кнопка вліво -->
+        <button 
+            id="@prevBtnId"
+                style="left:-20px"
+                class="prevBtn absolute top-1/2 transform -translate-y-1/2 z-10 bg-white bg-opacity-75 hover:bg-opacity-100 p-2 rounded-full shadow">
+            &#9664;
+        </button>
+        
+        <div 
+            id="@carouselId"
+             class="carousel flex space-x-4 overflow-hidden scroll-smooth">
+        
+        @foreach (var card in Model)
+        {
+            @(await Html.PartialAsync("Card", card))
+        }
+        
+        </div>
+        <!-- Кнопка вправо -->
+        <button 
+            id="@nextBtnId"
+                style="right:-20px"
+                class="absolute top-1/2 transform -translate-y-1/2 z-10 bg-white bg-opacity-75 hover:bg-opacity-100 p-2 rounded-full shadow">
+            &#9654;
+        </button>
+    </div>
+</section>
