@@ -23,7 +23,7 @@ public class HomeController : Controller
         List<Card> cities = [];
         for (var i = 0; i < 10; i++)
         {
-            cities.Add(new Card() { Image = "hotel_exaple.jpeg", Name = "Черкаси" });
+            cities.Add(new Card() { Image = "/hotel_exaple.jpeg", Name = "Черкаси" });
         }
 
         ViewBag.Cities = cities;

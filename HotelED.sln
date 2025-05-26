@@ -1,9 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35919.96 d17.13
+VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelED", "HotelED\HotelED.csproj", "{7DA6EAFF-77B0-426D-831D-FF845C580AC6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EED39989-6D4B-4A13-99C1-E064397CF71A} = {EED39989-6D4B-4A13-99C1-E064397CF71A}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelED.Core", "HotelED.Core\HotelED.Core.csproj", "{EED39989-6D4B-4A13-99C1-E064397CF71A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelED.Infrastructure", "HotelED.Infrastructure\HotelED.Infrastructure.csproj", "{36E389CA-06E5-47E2-83DF-5565D2B232DB}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81DDED9D-158B-E303-5F62-77A2896D2A5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +24,18 @@ Global
 		{7DA6EAFF-77B0-426D-831D-FF845C580AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DA6EAFF-77B0-426D-831D-FF845C580AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DA6EAFF-77B0-426D-831D-FF845C580AC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EED39989-6D4B-4A13-99C1-E064397CF71A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EED39989-6D4B-4A13-99C1-E064397CF71A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EED39989-6D4B-4A13-99C1-E064397CF71A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EED39989-6D4B-4A13-99C1-E064397CF71A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36E389CA-06E5-47E2-83DF-5565D2B232DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36E389CA-06E5-47E2-83DF-5565D2B232DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36E389CA-06E5-47E2-83DF-5565D2B232DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36E389CA-06E5-47E2-83DF-5565D2B232DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
