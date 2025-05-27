@@ -4,7 +4,9 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @* <script src="https://cdn.tailwindcss.com"></script> *@
+    <link href="css/tailwind.min.css" rel="stylesheet"/>
+    @await RenderSectionAsync("Styles", false)
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 

@@ -13,7 +13,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(optionsBuilder =>
     optionsBuilder.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
 });
 
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+    {
+        options.Password.RequiredLength = 8;
+    })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders()
     .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ApplicationDbContext, Guid>>()
@@ -26,6 +29,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseHsts();
 app.UseStaticFiles();
+app.UseAuthentication();
 app.UseRouting();
 app.MapControllers();
 app.Run();
