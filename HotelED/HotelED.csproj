@@ -23,8 +23,8 @@
     <ProjectReference Include="..\HotelED.Infrastructure\HotelED.Infrastructure.csproj" />
   </ItemGroup>
 
-	<Target Name="TailwindBuild" BeforeTargets="Build">
+	<!--<Target Name="TailwindBuild" BeforeTargets="Build">
 		<Exec Command="npm run build" Condition="'$(Configuration)' == 'Release'" />
 		<Exec Command="npm run watch" Condition="'$(Configuration)' == 'Debug'" />
-	</Target>
+	</Target>-->
 </Project>

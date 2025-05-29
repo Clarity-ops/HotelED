@@ -1,0 +1,32 @@
+﻿<!-- User menu container -->
+<div class="relative" id="userMenuContainer">
+    <!-- Кнопка-аватар -->
+    <button id="userMenuButton"
+            class="block w-10 h-10 bg-white rounded-full overflow-hidden shadow-md 
+                 hover:shadow-lg focus:shadow-lg transition transform hover:scale-105 active:scale-95 
+                 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
+        <img src="~/images/default-avatar.svg"
+             alt="Аватар"
+             class="w-full h-full object-cover" />
+    </button>
+
+    <!-- Меню (приховане за замовчуванням) -->
+    <div id="userMenu"
+         class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg overflow-hidden z-50
+              transform origin-top-right transition ease-out duration-200">
+        <a asp-controller="User" asp-action="Index" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition">Мій профіль</a>
+        <a asp-controller="User" asp-action="Bookings"
+           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition">
+            Мої резервування
+        </a>
+        <a href="/user/hotels"
+           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition">
+            Мої готелі
+        </a>
+        <div class="border-t border-gray-200"></div>
+        <button id="logoutButton"
+                class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition">
+            Вийти
+        </button>
+    </div>
+</div>

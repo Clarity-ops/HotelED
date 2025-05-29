@@ -1,0 +1,12 @@
+﻿@model Booking
+
+<div class="space-y-4">
+    <!-- Пример карточки бронирования -->
+    <div class="border rounded-lg p-4 hover:shadow-md transition">
+        <h3 class="font-medium text-lg">@Model.Hotel.Name</h3>
+        <p><span class="font-semibold">Заїзд:</span> @Model.CheckIn</p>
+        <p><span class="font-semibold">Виїзд:</span> @Model.CheckOut</p>
+        <span class="inline-block mt-2 px-2 py-1 bg-green-100 text-green-800 text-sm rounded">@Model.Status</span>
+    </div>
+    <!-- добавьте другие карточки -->
+</div>

@@ -1,0 +1,80 @@
+﻿@model UserProfileDto
+@{
+    var bookings = Model.Bookings ?? [];
+    var reviews = Model.Reviews ?? [];
+}
+<div class="container mx-auto px-6 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Поточные бронирования -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 mr-2" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2v-7H3v7a2 2 0 002 2z" />
+                </svg>
+                <h2 class="text-xl font-semibold">Поточні бронирования</h2>
+            </div>
+
+            @foreach (var booking in bookings.Where(booking => booking.CheckIn > DateTime.Now))
+            {
+                await Html.RenderPartialAsync("BookingCard", booking);
+            }
+        </div>
+
+        <!-- История бронирований -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 mr-2" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 7h18M3 12h18M3 17h18" />
+                </svg>
+                <h2 class="text-xl font-semibold">Історія Бронювань</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-left table-auto">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-2">Готель</th>
+                            <th class="px-4 py-2">Заїзд</th>
+                            <th class="px-4 py-2">Виїзд</th>
+                            <th class="px-4 py-2">Статус</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                        @foreach (var booking in bookings.Where(booking => booking.CheckIn <= DateTime.Now))
+                        {
+                                <tr>
+                                    <td class="px-4 py-3">@booking.Hotel.Name</td>
+                                    <td class="px-4 py-3">@booking.CheckIn</td>
+                                    <td class="px-4 py-3">@booking.CheckOut</td>
+                                    <td class="px-4 py-3"><span class="text-gray-500">@booking.Status</span></td>
+                                </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- История комментариев -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 mr-2" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M7 8h10M7 12h4m1 8l-5-5H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-5 5z" />
+                </svg>
+                <h2 class="text-xl font-semibold">История комментариев</h2>
+            </div>
+
+            @foreach (var comment in reviews)
+            {
+                await Html.RenderPartialAsync("Comment", comment);
+            }
+
+            </div>
+
+        </div>
+    </div>

@@ -1,6 +1,5 @@
 ﻿using HotelED.Core.Entities;
 using HotelED.Core.Entities.Identities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,6 +29,26 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> opts)
             .HasMany(h => h.Images)
             .WithOne(i => i.Hotel)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<Hotel>()
+            .HasOne(h => h.Owner)
+            .WithMany(u => u.Hotels)
+            .HasForeignKey(h => h.OwnerId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Конфигурация для Booking
+        builder.Entity<Booking>()
+            .HasOne(b => b.User)
+            .WithMany() // Если у ApplicationUser нет навигации к Booking
+            .HasForeignKey(b => b.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Конфигурация для Review
+        builder.Entity<Review>()
+            .HasOne(r => r.User)
+            .WithMany() // Если у ApplicationUser нет навигации к Review
+            .HasForeignKey(r => r.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         // Інші FK: за замовчуванням Restrict
     }

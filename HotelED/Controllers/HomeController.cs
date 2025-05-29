@@ -1,8 +1,10 @@
 ﻿using HotelED.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelED.Controllers;
 [Route("[controller]")]
+[AllowAnonymous]
 public class HomeController : Controller
 {
     // GET

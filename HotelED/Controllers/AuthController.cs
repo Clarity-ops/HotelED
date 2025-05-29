@@ -1,12 +1,14 @@
 ﻿using HotelED.Core.DTO;
 using HotelED.Core.Entities.Identities;
+using HotelED.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HotelED.Controllers
 {
     [Route("[controller]/[action]")]
+    [AllowAnonymous]
     public class AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) : Controller
     {
         [HttpGet("")]
@@ -42,7 +44,7 @@ namespace HotelED.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
         [HttpPost("")]
-        public async Task<IActionResult> Login(LoginForm loginForm)
+        public async Task<IActionResult> Login(LoginForm loginForm, string? returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -62,6 +64,24 @@ namespace HotelED.Controllers
                 return View();
             }
 
+            if (returnUrl is not null && Url.IsLocalUrl(returnUrl))
+            {
+                return LocalRedirect(returnUrl);
+            }
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+        [HttpGet("")]
+        public async Task<IActionResult> IsEmailExists(string? email)
+        {
+            if (email == null) return Json(false);
+            var check = await userManager.FindByEmailAsync(email);
+            return Json(check is null);
+
+        }
+
+        public async Task<IActionResult> LogOut()
+        { 
+            await signInManager.SignOutAsync();
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
     }

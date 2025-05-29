@@ -4,7 +4,7 @@
         <div class="bg-white shadow-lg rounded-lg w-full max-w-md">
             <div class="p-6">
                 <!-- Login Form -->
-                <form id="loginForm" asp-action="Login" asp-controller="Auth" class="space-y-4">
+                <form id="loginForm" asp-action="Login" asp-controller="Auth" class="space-y-4" asp-route-ReturnUrl="@Context.Request.Query["ReturnUrl"]">
                     <div>
                         <label asp-for="Email" class="block text-sm font-medium text-gray-700">Email</label>
                         <input asp-for="Email" type="email" required
@@ -33,3 +33,15 @@
     </div>
 </main>
 
+@* Модальне вікно помилок *@
+@await Html.PartialAsync("ModalError", ViewData);
+
+@section Scripts
+{
+    <script src="/errorModal.js"></script>
+}
+
+@section Styles
+{
+    <link type="text/tailwindcss" href="styles.css" rel="stylesheet" />
+}

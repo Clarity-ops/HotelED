@@ -1,16 +1,13 @@
-﻿@{
+﻿<!DOCTYPE html>
 
-}
-<!DOCTYPE html>
-
-<html>
+<html class="h-full">
 <head>
     <title>title</title>
     @* <script src="https://cdn.tailwindcss.com"></script> *@
-    <link rel="stylesheet" href="~/css/tailwind.min.css" />
+    <link rel="stylesheet" href="~/css/tailwind.min.css" asp-append-version="true"/>
 </head>
-    <body class="bg-gray-50 text-gray-800">
-
+<body class="flex flex-col min-h-screen bg-gray-50 text-gray-800">
+    <div class="flex-1">
     <!-- Header -->
     <header class="bg-blue-700 text-white">
         <div class="container mx-auto flex items-center justify-between py-4 px-6">
@@ -18,8 +15,22 @@
             <nav class="flex items-center space-x-6">
                 <span>UAH</span>
                 <a href="#" class="hover:underline">Допомога</a>
-                <a asp-controller="Auth" asp-action="Register" class="bg-white text-blue-700 px-4 py-2 rounded hover:bg-gray-100">Зареєструватися</a>
-                <a asp-controller="Auth" asp-action="Login" class="py-2 hover:underline">Увійти</a>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    @await Html.PartialAsync("UserMenu")
+                }
+                else
+                {
+                    <!-- Якщо неавторизований -->
+                    <a asp-controller="Auth" asp-action="Register"
+                       class="bg-white text-blue-700 px-4 py-2 rounded hover:bg-gray-100">
+                        Зареєструватися
+                    </a>
+                    <a asp-controller="Auth" asp-action="Login"
+                       class="px-4 py-2 hover:underline">
+                        Увійти
+                    </a>
+                }
             </nav>
         </div>
     </header>
@@ -35,9 +46,14 @@
         </div>
     </section>
     @RenderBody()
+    </div>
     @{
         await Html.RenderPartialAsync("Footer");
     }
     @await RenderSectionAsync("Scripts", false)
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <script src="/userMenu.js"></script>
+    }
     </body>
 </html>
