@@ -69,7 +69,8 @@ public class HotelRepository(ApplicationDbContext ctx) : IHotelRepository
 
     public Task<IEnumerable<Hotel>> GetAllHotels()
     {
-        return Task.FromResult(ctx.Hotels.Include(hotel => hotel.Images).AsNoTracking().AsEnumerable());
+        return Task.FromResult(ctx.Hotels.Include(hotel => hotel.Images)
+            .Include(hotel => hotel.Reviews).AsNoTracking().AsEnumerable());
     }
 
     public Task<IEnumerable<Hotel>> GetHotels(int count)

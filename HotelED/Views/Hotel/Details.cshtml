@@ -187,13 +187,28 @@
             </div>
 
             <!-- Кнопка відправки -->
-            <div class="text-right">
-                <button type="submit"
-                        class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700
+            @if (User.Identity?.IsAuthenticated is not null && User.Identity.IsAuthenticated)
+            {
+                <div class="text-right">
+                    <button type="submit"
+                            class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700
                      focus:outline-none focus:ring-2 focus:ring-blue-300 transition">
-                    Надіслати
-                </button>
-            </div>
+                        Надіслати
+                    </button>
+                </div>
+            }
+            else
+            {
+                <div class="text-right">
+                    <button type="submit"
+                            disabled="disabled"
+                            class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700
+                     focus:outline-none focus:ring-2 focus:ring-blue-300 transition">
+                        Надіслати
+                    </button>
+                </div>
+            }
+            
         </form>
     </div>
 </main>
