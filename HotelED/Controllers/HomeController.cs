@@ -1,35 +1,21 @@
-﻿using HotelED.Models;
+﻿using HotelED.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelED.Controllers;
 [Route("[controller]")]
 [AllowAnonymous]
-public class HomeController : Controller
+public class HomeController(IHotelService hotelService) : Controller
 {
     // GET
     [HttpGet("/")]
-    [HttpGet("[action]")]
-    public IActionResult Index()
+    [HttpGet("[action]/{location?}")]
+    public async Task<IActionResult> Index(string? location)
     {
-        List<Card> hotelTypesCards = [];
-        for (var i = 0; i < 10; i++)
-        {
-            hotelTypesCards.Add(new Card
-            {
-                Name = "Готель",
-                Image = "/hotel_exaple.jpeg"
-            });
-        }
+        var hotels = (await hotelService.GetAllHotelsAsync()).ToList();
+        if (location is null) return View(hotels);
+        var filtered = hotels.Where(hotel => hotel.Location.Contains(location));
+        return View(filtered);
 
-        List<Card> cities = [];
-        for (var i = 0; i < 10; i++)
-        {
-            cities.Add(new Card() { Image = "/hotel_exaple.jpeg", Name = "Черкаси" });
-        }
-
-        ViewBag.Cities = cities;
-        ViewBag.HotelTypesCards = hotelTypesCards;
-        return View();
     }
 }

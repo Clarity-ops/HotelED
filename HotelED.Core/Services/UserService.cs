@@ -22,7 +22,7 @@ public class UserService(IUserRepository users) : IUserService
 
     public async Task<UserProfileDto?> GetProfileAsync(string email)
     {
-        var user = await users.GetByEmailAsync(email);
+        var user = await users.GetWithDetailsAsync(email);
         if (user == null) return null;
 
         return new UserProfileDto {

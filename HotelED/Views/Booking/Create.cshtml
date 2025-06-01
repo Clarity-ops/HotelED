@@ -1,0 +1,51 @@
+﻿@model BookingCreateViewModel
+@{
+    ViewData["Title"] = "Бронювання готелю";
+    ViewContext.RouteData.Values.Remove("hotelId");
+}
+<!-- Main Content -->
+<main class="flex-grow container mx-auto px-6 py-8">
+    <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+
+        <!-- Validation Summary -->
+        <div asp-validation-summary="ModelOnly" class="text-red-600 text-sm mb-4"></div>
+
+        <form asp-action="Create" asp-controller="Booking" asp-route-id="" enctype="application/x-www-form-urlencoded" method="post" class="space-y-6">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="HotelId" />
+
+            <!-- Дата заїзду -->
+            <div>
+                <label asp-for="CheckIn" class="block text-sm font-medium text-gray-700">Дата заїзду</label>
+                <input asp-for="CheckIn" type="date" required
+                       class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg
+                        focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                <span asp-validation-for="CheckIn" class="text-red-600 text-sm"></span>
+            </div>
+
+            <!-- Дата виїзду -->
+            <div>
+                <label asp-for="CheckOut" class="block text-sm font-medium text-gray-700">Дата виїзду</label>
+                <input asp-for="CheckOut" type="date" required
+                       class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg
+                        focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                <span asp-validation-for="CheckOut" class="text-red-600 text-sm"></span>
+            </div>
+
+            <!-- Кнопки -->
+            <div class="flex justify-between">
+                <a asp-controller="Hotel" asp-action="Details" asp-route-id="@Model.HotelId"
+                   class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300
+                    focus:outline-none focus:ring-2 focus:ring-blue-300 transition">
+                    Назад
+                </a>
+                <button type="submit"
+                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700
+                         focus:outline-none focus:ring-2 focus:ring-blue-300 transition">
+                    Підтвердити бронювання
+                </button>
+            </div>
+        </form>
+
+    </div>
+</main>

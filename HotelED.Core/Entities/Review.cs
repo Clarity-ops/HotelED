@@ -14,6 +14,6 @@ public class Review
     public required string Comment { get; set; }
     public DateTime Date { get; set; } = DateTime.UtcNow;
 
-    public required Hotel Hotel { get; set; }
-    public required ApplicationUser User { get; set; }
+    public Hotel Hotel { get; set; } = null!;
+    public ApplicationUser User { get; set; } = null!;
 }

@@ -37,13 +37,22 @@ namespace HotelED.Infrastructure.Migrations
                     b.Property<DateTime>("CheckOut")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<Guid>("HotelId")
                         .HasColumnType("uuid");
+
+                    b.Property<int>("Nights")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("numeric");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -90,6 +99,9 @@ namespace HotelED.Infrastructure.Migrations
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
+
+                    b.Property<decimal>("PricePerDay")
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
@@ -269,9 +281,6 @@ namespace HotelED.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ApplicationUserId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -290,8 +299,6 @@ namespace HotelED.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("HotelId");
 
@@ -461,10 +468,6 @@ namespace HotelED.Infrastructure.Migrations
 
             modelBuilder.Entity("HotelED.Core.Entities.Review", b =>
                 {
-                    b.HasOne("HotelED.Core.Entities.Identities.ApplicationUser", null)
-                        .WithMany("Reviews")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("HotelED.Core.Entities.Hotel", "Hotel")
                         .WithMany("Reviews")
                         .HasForeignKey("HotelId")
@@ -472,9 +475,9 @@ namespace HotelED.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("HotelED.Core.Entities.Identities.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Hotel");

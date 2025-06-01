@@ -1,8 +1,32 @@
-﻿@model Card
+﻿@model Hotel
 
-<div class="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg flex-shrink-0" style="width:250px">
-    <img src="@Model.Image" alt="@Model.Name" class="w-full h-48 object-cover"/>
+<div class="max-w-sm bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+    <!-- Фото готелю -->
+    <div class="relative group">
+        <img src="@Model.Images.MinBy(img => img.SortOrder)?.Url"
+        alt="Фото готелю"
+        class="w-full h-48 object-cover group-hover:opacity-90 transition-opacity duration-300" />
+        <!-- Категорія -->
+        <span class="absolute top-3 left-3 bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
+            @{
+                var rating = 0.0;
+                if (Model.Reviews.Count > 0)
+                    rating = Model.Reviews.Average(review => review.Rating);
+            }
+            @rating★
+        </span>
+    </div>
+
+    <!-- Інформація про готель -->
     <div class="p-4">
-        <h3 class="font-semibold text-lg">@Model.Name</h3>
+        <h3 class="text-xl font-semibold text-gray-800 mb-1 hover:text-blue-600 transition-colors duration-200 cursor-pointer">
+            <a asp-action="Details" asp-controller="Hotel" asp-route-id="@Model.Id">@Model.Name</a>
+        </h3>
+        <p class="text-gray-500 text-sm mb-3 flex items-center">
+            @Model.Location
+        </p>
+        <p class="inline-block bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded mb-2">
+            @Model.Category
+        </p>
     </div>
 </div>

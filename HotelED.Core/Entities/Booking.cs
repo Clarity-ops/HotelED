@@ -13,7 +13,10 @@ public class Booking
     [MaxLength(30)]
     public required string Status { get; set; }
 
-    public required ApplicationUser User { get; set; }
-    public required Hotel Hotel { get; set; }
-    public required Payment Payment { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public int Nights { get; set; } // автоматично обчислюється
+    public decimal TotalPrice { get; set; } // Nights * Hotel.PricePerDay
+    public ApplicationUser User { get; set; } = null!;
+    public Hotel Hotel { get; set; } = null!;
+    public Payment Payment { get; set; } = null!;
 }

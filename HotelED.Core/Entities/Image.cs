@@ -13,5 +13,5 @@ public class Image
     public int SortOrder { get; set; }
     public DateTime UploadedAt { get; set; } = DateTime.UtcNow;
 
-    public required Hotel Hotel { get; set; }
+    public Hotel Hotel { get; set; } = null!;
 }

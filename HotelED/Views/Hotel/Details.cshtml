@@ -1,0 +1,229 @@
+﻿@model HotelDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Name;
+    var images = Model.Images.OrderBy(image => image.SortOrder);
+    var counter = 1;
+}
+
+<main class="bg-gray-50">
+    <!-- Container -->
+    <div class="container mx-auto px-6 py-8">
+        <!-- Назва та локація -->
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2 animate-fade-in">@Model.Name</h1>
+            <p class="text-gray-600 text-lg flex items-center animate-fade-in delay-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M17.657 16.657L13.414 12.414a4 4 0 10-5.657 0l-4.243 4.243" />
+                </svg>
+                @Model.Location
+            </p>
+        </div>
+
+        <!-- Галерея зображень -->
+        <div class="mb-10">
+            <div class="relative">
+                <!-- Головне зображення -->
+                <img id="mainImage"
+                     src="@Model.Images.First().Url"
+                     alt="Головне фото готелю"
+                     class="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg transition-img opacity-100" />
+            </div>
+            <!-- Прев’ю зображення -->
+            <div class="mt-4 flex space-x-2 overflow-x-auto">
+                @* <img data-src="https://via.placeholder.com/800x450?text=Image+1"
+                     src="https://via.placeholder.com/150x84?text=Image+1"
+                     alt="Фото 1"
+                     class="w-32 h-20 object-cover rounded cursor-pointer border-2 border-transparent hover:border-blue-500 shadow-sm transition animate-fade-in delay-200" />
+                <img data-src="https://via.placeholder.com/800x450?text=Image+2"
+                     src="https://via.placeholder.com/150x84?text=Image+2"
+                     alt="Фото 2"
+                     class="w-32 h-20 object-cover rounded cursor-pointer border-2 border-transparent hover:border-blue-500 shadow-sm transition animate-fade-in delay-300" />
+                <img data-src="https://via.placeholder.com/800x450?text=Image+3"
+                     src="https://via.placeholder.com/150x84?text=Image+3"
+                     alt="Фото 3"
+                     class="w-32 h-20 object-cover rounded cursor-pointer border-2 border-transparent hover:border-blue-500 shadow-sm transition animate-fade-in delay-400" />
+                <img data-src="https://via.placeholder.com/800x450?text=Image+4"
+                     src="https://via.placeholder.com/150x84?text=Image+4"
+                     alt="Фото 4"
+                     class="w-32 h-20 object-cover rounded cursor-pointer border-2 border-transparent hover:border-blue-500 shadow-sm transition animate-fade-in delay-500" /> *@
+                @foreach (var image in images)
+                {
+                    <img src="@image.Url" data-src="@image.Url" alt="Фото @counter" class="w-32 h-20 object-cover rounded cursor-pointer border-2 border-transparent hover:border-blue-500 shadow-sm transition animate-fade-in delay-200" />
+                    counter++;
+                }
+            </div>
+        </div>
+
+        <!-- Інформація про готель -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+            <!-- Лівий стовпець: опис та рейтинг -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Опис -->
+                <section class="bg-white rounded-lg shadow p-6 animate-fade-in delay-600">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-3">Опис готелю</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        @Model.Description
+                    </p>
+                </section>
+
+                <!-- Рейтинг та відгуки -->
+                <section class="bg-white rounded-lg shadow p-6 animate-fade-in delay-700">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-3">Відгуки</h2>
+                    <!-- Середній рейтинг -->
+                    <div class="flex items-center mb-6">
+                        <span class="text-gray-600 ml-2">4.0 (125 відгуків)</span>
+                    </div>
+                    <!-- Список відгуків -->
+                    <div class="space-y-4">
+                        @foreach (var review in Model.Reviews)
+                        {
+                            <div class="bg-gray-100 rounded-lg p-4 animate-fade-in delay-800">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-semibold text-gray-800">@review.User.Name</span>
+                                    <span class="text-sm text-gray-500">@review.Date</span>
+                                </div>
+                                <div class="flex items-center mb-2 text-yellow-500">
+                                    <!-- 5 зірок -->
+                                    @review.Rating
+                                </div>
+                                <p class="text-gray-700">@review.Comment</p>
+                            </div>
+                        }
+                    </div>
+                </section>
+            </div>
+
+            <!-- Правий стовпець: кнопка бронювання -->
+            <aside class="space-y-6">
+                <div class="bg-white rounded-lg shadow p-6 animate-fade-in delay-600">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-2xl font-semibold text-gray-800">₴@(Model.PricePerDay) / за добу</span>
+                        <span class="text-sm text-green-600 font-medium">В наявності</span>
+                    </div>
+                    <a asp-controller="Booking" asp-action="Create" asp-route-hotelId="@Model.Id" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700
+                         focus:outline-none focus:ring-2 focus:ring-blue-300 transition animate-fade-in delay-700">
+                        Забронювати зараз
+                    </a>
+                </div>
+                <!-- Додаткова інформація -->
+                <div class="bg-white rounded-lg shadow p-6 animate-fade-in delay-800">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Зручності</h3>
+                    <ul class="space-y-2 text-gray-700">
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                            </svg>
+                            Wi-Fi
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M12 8c-3.866 0-7 .895-7 2v6a2 2 0 002 2h10a2 2 0 002-2v-6c0-1.105-3.134-2-7-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                            </svg>
+                            Кондиціонер
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M5 3v4h14V3M5 21v-4h14v4M5 12h14" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                            </svg>
+                            Сніданок включено
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M3 7h18M3 12h18M3 17h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                            </svg>
+                            Парковка
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Форма додавання відгуку -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-12">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Залишити відгук</h2>
+
+        @if (TempData["ReviewError"] != null)
+        {
+            <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4">
+                @TempData["ReviewError"]
+            </div>
+        }
+        @if (TempData["ReviewSuccess"] != null)
+        {
+            <div class="bg-green-100 text-green-700 px-4 py-2 rounded mb-4">
+                @TempData["ReviewSuccess"]
+            </div>
+        }
+
+        <form asp-controller="Review" asp-action="Create" method="post" class="space-y-4">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="HotelId" value="@Model.Id" />
+
+            <!-- Вибір рейтингу: просто select 1–10 -->
+            <div>
+                <label for="Rating" class="block text-sm font-medium text-gray-700 mb-1">Оцінка (1–10)</label>
+                <select id="Rating" name="Rating" required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg
+                     bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <option value="" disabled selected>Виберіть оцінку</option>
+                    @for (var i = 1; i <= 10; i++)
+                    {
+                        var i1 = i;
+                        <option value="@i">@i1</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Текстовий коментар -->
+            <div>
+                <label for="Comment" class="block text-sm font-medium text-gray-700 mb-1">Коментар</label>
+                <textarea id="Comment" name="Comment" rows="4" maxlength="1000"
+                          class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg
+                       focus:outline-none focus:ring-2 focus:ring-blue-400"
+                          placeholder="Напишіть свій відгук..."></textarea>
+            </div>
+
+            <!-- Кнопка відправки -->
+            <div class="text-right">
+                <button type="submit"
+                        class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700
+                     focus:outline-none focus:ring-2 focus:ring-blue-300 transition">
+                    Надіслати
+                </button>
+            </div>
+        </form>
+    </div>
+</main>
+
+@section Styles
+{
+    <style>
+        /* Плавна зміна зображення */
+        .transition-img {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+}
+@section Scripts
+{
+    <!-- Скрипт для галереї -->
+    <script>
+    const mainImage = document.getElementById('mainImage');
+    const thumbnails = document.querySelectorAll('[data-src]');
+
+    thumbnails.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const newSrc = thumb.getAttribute('data-src');
+        // Плавно змінюємо зображення
+        mainImage.classList.add('opacity-0');
+        setTimeout(() => {
+          mainImage.src = newSrc;
+          mainImage.classList.remove('opacity-0');
+        }, 200);
+      });
+    });
+  </script>
+}

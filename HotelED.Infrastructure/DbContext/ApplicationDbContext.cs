@@ -45,10 +45,16 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> opts)
 
         // Конфигурация для Review
         builder.Entity<Review>()
+            .HasOne(r => r.Hotel)
+            .WithMany(h => h.Reviews)
+            .HasForeignKey(r => r.HotelId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<Review>()
             .HasOne(r => r.User)
-            .WithMany() // Если у ApplicationUser нет навигации к Review
+            .WithMany(u => u.Reviews)
             .HasForeignKey(r => r.UserId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         // Інші FK: за замовчуванням Restrict
     }

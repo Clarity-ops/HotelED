@@ -15,9 +15,10 @@ public class Hotel
     [MaxLength(20)]
     public required string Category { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
+    [Range(0, double.MaxValue)]
+    public decimal PricePerDay { get; set; }
     public Guid OwnerId { get; set; }
-    public required ApplicationUser Owner { get; set; }
+    public ApplicationUser Owner { get; set; } = null!;
 
     public ICollection<Image> Images { get; set; } = [];
     public ICollection<Review> Reviews { get; set; } = [];
