@@ -17,7 +17,7 @@
                 <h2 class="text-xl font-semibold">Поточні бронирования</h2>
             </div>
 
-            @foreach (var booking in bookings.Where(booking => booking.CheckIn > DateTime.Now))
+            @foreach (var booking in bookings.Where(booking => booking.CheckIn < DateTime.Now))
             {
                 await Html.RenderPartialAsync("BookingCard", booking);
             }
@@ -44,12 +44,12 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y">
-                        @foreach (var booking in bookings.Where(booking => booking.CheckIn <= DateTime.Now))
+                        @foreach (var booking in bookings.Where(booking => booking.CheckIn >= DateTime.Now))
                         {
                                 <tr>
                                     <td class="px-4 py-3">@booking.Hotel.Name</td>
-                                    <td class="px-4 py-3">@booking.CheckIn</td>
-                                    <td class="px-4 py-3">@booking.CheckOut</td>
+                                    <td class="px-4 py-3">@booking.CheckIn.ToShortDateString()</td>
+                                    <td class="px-4 py-3">@booking.CheckOut.ToShortDateString()</td>
                                     <td class="px-4 py-3"><span class="text-gray-500">@booking.Status</span></td>
                                 </tr>
                         }

@@ -1,0 +1,127 @@
+﻿@model HotelCreateInfo
+
+<!-- Main Content -->
+<main class="flex-grow container mx-auto px-6 py-8">
+    <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md p-6">
+
+@*         <!-- Validation Summary -->
+        <div asp-validation-summary="ModelOnly" class="text-red-600 text-sm mb-4"></div> *@
+
+        <form asp-action="Create" asp-controller="Hotel" method="post" enctype="multipart/form-data" class="space-y-6">
+            @Html.AntiForgeryToken()
+
+            <!-- Назва -->
+            <div>
+                <label asp-for="Name" class="block text-sm font-medium text-gray-700">Назва</label>
+                <input asp-for="Name"
+                       type="text"
+                       required
+                       class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg
+                        focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+                <span asp-validation-for="Name" class="text-red-600 text-sm"></span>
+            </div>
+
+            <!-- Локація -->
+            <div>
+                <label asp-for="Location" class="block text-sm font-medium text-gray-700">Локація</label>
+                <input asp-for="Location"
+                       type="text"
+                       required
+                       class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg
+                        focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+                <span asp-validation-for="Location" class="text-red-600 text-sm"></span>
+            </div>
+
+            <!-- Категорія -->
+            <div>
+                <label asp-for="Category" class="block text-sm font-medium text-gray-700">Категорія</label>
+                <input asp-for="Category"
+                       type="text"
+                       required
+                       class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg
+                        focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+                <span asp-validation-for="Category" class="text-red-600 text-sm"></span>
+            </div>
+
+            <!-- Опис -->
+            <div>
+                <label asp-for="Description" class="block text-sm font-medium text-gray-700">Опис</label>
+                <textarea asp-for="Description"
+                          rows="4"
+                          required
+                          class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg
+                           focus:outline-none focus:ring-2 focus:ring-blue-400 transition"></textarea>
+                <span asp-validation-for="Description" class="text-red-600 text-sm"></span>
+            </div>
+            <!-- Ціна -->
+            <div>
+                <label asp-for="PricePerDay" class="block text-sm font-medium text-gray-700">Ціна</label>
+                <input asp-for="PricePerDay"
+                       type="number"
+                       required
+                       class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg
+                        focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+                <span asp-validation-for="PricePerDay" class="text-red-600 text-sm"></span>
+            </div>
+
+            <!-- Секція завантаження фото -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Зображення готелю</label>
+                <!-- Прихований інпут файлів -->
+                <input asp-for="Photos"
+                       type="file"
+                       id="photoInput"
+                       name="Photos"
+                       multiple
+                       accept="image/*"
+                       class="hidden" />
+                <!-- Drag & Drop зона -->
+                <div id="dropZone"
+                     class="relative flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg
+                      h-40 cursor-pointer hover:border-blue-400 transition-colors bg-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-400 mb-2" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M7 16V4m0 0L3 8m4-4l4 4m4 0v12m0 0l4-4m-4 4l-4-4" />
+                    </svg>
+                    <p class="text-gray-500">Перетягніть файли сюди або <span id="browseText" class="text-blue-600 hover:underline">оберіть файли</span></p>
+                </div>
+                <!-- Контейнер для перегляду обраних фото -->
+                <div id="previewContainer" class="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
+                <span asp-validation-for="Photos" class="text-red-600 text-sm"></span>
+            </div>
+
+            <!-- Кнопки Дій -->
+            <div class="flex justify-end space-x-4">
+                <a asp-controller="User" asp-action="Hotels"
+                   class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300
+                    focus:outline-none focus:ring-2 focus:ring-blue-300 transition">
+                    Скасувати
+                </a>
+                <button type="submit"
+                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700
+                         focus:outline-none focus:ring-2 focus:ring-blue-300 transition">
+                    Створити
+                </button>
+            </div>
+        </form>
+    </div>
+</main>
+
+<script src="/dragAndDrop.js"></script>
+
+@section Styles
+{
+    <style>
+        .field-validation-valid {
+            display: none;
+        }
+
+        .field-validation-error {
+            display: block;
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            color: #dc2626;
+        }
+    </style>
+}

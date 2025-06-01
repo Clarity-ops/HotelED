@@ -1,45 +1,46 @@
-﻿@model ICollection<Booking>
+﻿@model IEnumerable<Booking>
 
 <!-- Контент -->
 <main class="flex-grow container mx-auto px-6 py-8">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      
-        <!-- Пример карточки бронирования -->
-        <div class="bg-white rounded-lg shadow-md opacity-0 animate-fade-in-up delay-100
-                  hover:shadow-lg transform hover:scale-105 transition"
-             style="animation-delay: 0.1s;">
-            <div class="p-6 space-y-2">
-                <h2 class="text-lg font-semibold text-gray-800">Готель «Сонячний»</h2>
-                <p><span class="font-medium">Заїзд:</span> 2025-06-10</p>
-                <p><span class="font-medium">Виїзд:</span> 2025-06-15</p>
-                <span class="inline-block mt-2 px-2 py-1 bg-green-100 text-green-800 text-sm rounded">
-                    Підтверджено
-                </span>
-                <a href="#"
-                   class="inline-block mt-4 text-blue-600 hover:underline">
-                    Деталі бронювання →
-                </a>
-            </div>
-        </div>
 
-        <div class="bg-white rounded-lg shadow-md opacity-0 animate-fade-in-up delay-200
+        @foreach (var booking in Model)
+        {
+            <div class="bg-white rounded-lg shadow-md opacity-0 animate-fade-in-up delay-100
                   hover:shadow-lg transform hover:scale-105 transition"
-             style="animation-delay: 0.2s;">
-            <div class="p-6 space-y-2">
-                <h2 class="text-lg font-semibold text-gray-800">Resort Paradise</h2>
-                <p><span class="font-medium">Заїзд:</span> 2025-07-01</p>
-                <p><span class="font-medium">Виїзд:</span> 2025-07-05</p>
-                <span class="inline-block mt-2 px-2 py-1 bg-yellow-100 text-yellow-800 text-sm rounded">
-                    Очікується оплата
-                </span>
-                <a href="#"
-                   class="inline-block mt-4 text-blue-600 hover:underline">
-                    Деталі бронювання →
-                </a>
-            </div>
-        </div>
+            style="animation-delay: 0.1s;">
+                <div class="p-6 space-y-2">
+                    <h2 class="text-lg font-semibold text-gray-800">@booking.Hotel.Name</h2>
+                    <p><span class="font-medium">Заїзд:</span> @booking.CheckIn</p>
+                    <p><span class="font-medium">Виїзд:</span> @booking.CheckOut</p>
 
-        <!-- Добавь другие карточки аналогично, увеличивая delay -->
+                    @switch (booking.Status)
+                    {
+                        case "Confirmed":
+                            <span class="inline-block mt-2 px-2 py-1 bg-green-100 text-green-800 text-sm rounded">
+                                Підтверджено
+                            </span>
+                            break;
+                        case "Pending":
+                            <span class="inline-block mt-2 px-2 py-1 bg-yellow-100 text-yellow-800 text-sm rounded">
+                                Виконується
+                            </span>
+                            break;
+                        case "Failed":
+                            <span class="inline-block mt-2 px-2 py-1 bg-red-100 text-red-800 text-sm rounded">
+                                Скасовано
+                            </span>
+                            break;
+                    }
+
+                    <a asp-controller="Hotel" asp-action="Details" asp-route-id="@booking.HotelId"
+                       class="inline-block mt-4 text-blue-600 hover:underline">
+                        Деталі бронювання →
+                    </a>
+                </div>
+            </div>
+        }
+
       
     </div>
 </main>
